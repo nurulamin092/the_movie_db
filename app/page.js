@@ -1,4 +1,5 @@
 import MovieCard from "@/components/movies/MovieCard";
+import Hero from "@/components/shared/Hero";
 
 export default async function Home() {
   try {
@@ -18,6 +19,7 @@ export default async function Home() {
 
     return (
       <>
+        <Hero />
         <section className="mb-8">
           <h2 className="text-2xl font-bold mb-4">Now Playing</h2>
           <div className="flex space-x-4 overflow-x-auto pb-4">

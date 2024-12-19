@@ -7,7 +7,6 @@ const MovieCard = ({ movie }) => {
       <div className="flex-shrink-0 w-48 cursor-pointer hover:scale-105 transition-transform">
         <Link href={`/movie/${movie.id}`}>
           <Image
-            // src={movie.poster_path}
             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
             alt={`Poster of ${movie.title}`}
             // alt={movie.title}
