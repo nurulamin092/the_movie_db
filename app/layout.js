@@ -1,3 +1,5 @@
+import Hero from "@/components/shared/Hero";
+import Navbar from "@/components/shared/Navbar";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -12,9 +14,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={inter.className}
+        className={`${inter.className} bg-black text-white`}
       >
-        {children}
+        <Navbar />
+        <Hero />
+        <div className="container mx-auto px-4 py-8">
+          {children}
+        </div>
+
       </body>
     </html>
   );
