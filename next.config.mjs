@@ -7,6 +7,25 @@ const nextConfig = {
                 hostname: 'image.tmdb.org',
 
             },
+            {
+                protocol: 'http',
+                hostname: 'facebook.com',
+
+            },
+            {
+                protocol: 'http',
+                hostname: 'x.com',
+
+            },
+            {
+                protocol: 'http',
+                hostname: 'linkedin.com',
+
+            }
+
+
+
+
         ],
     },
 };

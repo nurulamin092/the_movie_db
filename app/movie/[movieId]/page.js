@@ -1,3 +1,5 @@
+
+import MoreLikeThis from "@/components/movies/MoreLikeThis";
 import MovieDetails from "@/components/movies/MovieDetails";
 
 
@@ -17,6 +19,7 @@ export default async function MovieDetailsPage({ params: { movieId } }) {
 
             <div id="movieDetails" className="min-h-screen pt-20 mb-8">
                 <MovieDetails movie={movie} />
+                <MoreLikeThis movieId={movieId} />
             </div>
         </>
 

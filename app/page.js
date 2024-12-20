@@ -1,4 +1,5 @@
 import MovieCard from "@/components/movies/MovieCard";
+import MovieTitle from "@/components/movies/MovieTitle";
 import Hero from "@/components/shared/Hero";
 
 export default async function Home() {
@@ -24,8 +25,13 @@ export default async function Home() {
           <h2 className="text-2xl font-bold mb-4">Now Playing</h2>
           <div className="flex space-x-4 overflow-x-auto pb-4">
             {nowPlaying.results.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
+              <div key={movie.id} className="flex-shrink-0 w-48 cursor-pointer hover:scale-105 transition-transform">
+                <MovieCard movie={movie} />
+                <MovieTitle movie={movie} />
+              </div>
+
             ))}
+
           </div>
         </section>
 
@@ -33,7 +39,9 @@ export default async function Home() {
           <h2 className="text-2xl font-bold mb-4">Popular Movies</h2>
           <div className="flex space-x-4 overflow-x-auto pb-4">
             {popular.results.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
+              <div key={movie.id} className="flex-shrink-0 w-48 cursor-pointer hover:scale-105 transition-transform">
+                <MovieCard movie={movie} />
+              </div>
             ))}
           </div>
         </section>
@@ -42,7 +50,9 @@ export default async function Home() {
           <h2 className="text-2xl font-bold mb-4">Top Rated Movies</h2>
           <div className="flex space-x-4 overflow-x-auto pb-4">
             {topRated.results.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
+              <div key={movie.id} className="flex-shrink-0 w-48 cursor-pointer hover:scale-105 transition-transform">
+                <MovieCard movie={movie} />
+              </div>
             ))}
           </div>
         </section>
