@@ -11,21 +11,18 @@ const Navbar = () => {
               MOVIE DB
             </Link>
             <div className="ml-8 space-x-4">
-              <Link
-                href="./index.html"
-                className="text-white hover:text-gray-300"
-              >
+              <Link href="/" className="text-white hover:text-gray-300">
                 Home
               </Link>
               <Link
-                href="./compare.html"
+                href="/compare-movies"
                 className="text-white hover:text-gray-300"
               >
                 Compare Movies
               </Link>
 
               <Link
-                href="./WatchList.html"
+                href="/watch-list"
                 className="text-white hover:text-gray-300"
               >
                 Watch Later

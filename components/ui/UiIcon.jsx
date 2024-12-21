@@ -8,7 +8,7 @@ export function AddIcon() {
       fill="none"
       stroke="currentColor"
       stroke-width="2"
-      stroke-linecap="round"
+      strokeLinecap="round"
       stroke-linejoin="round"
       className="icon icon-tabler icons-tabler-outline icon-tabler-file-plus"
     >
@@ -30,7 +30,7 @@ export function AddedIcon() {
       fill="none"
       stroke="currentColor"
       stroke-width="2"
-      stroke-linecap="round"
+      strokeLinecap="round"
       stroke-linejoin="round"
       className="icon icon-tabler icons-tabler-outline icon-tabler-checks"
     >
