@@ -8,21 +8,6 @@ const SearchDialog = ({ onClose, onSelect }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // const handleSearch = async () => {
-  //   try {
-  //     const res = await fetch(
-  //       `http://localhost:3000/api/movie/search?query=${encodeURIComponent(
-  //         searchTerm
-  //       )}`
-  //     );
-  //     const data = await res.json();
-  //     setResults(data || []);
-  //   } catch (error) {
-  //     console.error("Error fetching movies:", error);
-  //     setResults([]);
-  //   }
-  // };
-
   const handleSearch = async () => {
     if (!searchTerm.trim()) {
       setError("Please enter a valid movie name.");
