@@ -9,7 +9,6 @@ export async function generateMetadata({ params }) {
     return { title: `${movie.title} | Movie BD` };
 }
 
-
 export default async function MovieDetailsPage({ params: { movieId } }) {
     const res = await fetch(`http://localhost:3000/api/movie/${movieId}`, { cache: "no-store" });
     const movie = await res.json();

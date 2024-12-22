@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 
 const SearchDialog = ({ onClose, onSelect }) => {
@@ -13,7 +12,6 @@ const SearchDialog = ({ onClose, onSelect }) => {
       setError("Please enter a valid movie name.");
       return;
     }
-
     setLoading(true);
     setError("");
     try {
@@ -23,11 +21,10 @@ const SearchDialog = ({ onClose, onSelect }) => {
         )}`
       );
       const data = await res.json();
-      setResults(data?.results || []); // Ensure results is an array
+      setResults(data?.results || []);
     } catch (error) {
       console.error("Error fetching movies:", error);
       setError("Failed to fetch movies. Please try again later.");
-      setResults([]);
     } finally {
       setLoading(false);
     }
@@ -50,54 +47,41 @@ const SearchDialog = ({ onClose, onSelect }) => {
             setSearchTerm(e.target.value);
             setError("");
           }}
-          className="w-full bg-zinc-800 text-white px-4 py-2 rounded mb-4 focus:outline-none focus:ring-2 focus:ring-red-600"
+          className="w-full bg-zinc-800 text-white px-4 py-2 rounded mb-4"
         />
         <button
           onClick={handleSearch}
-          className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition-colors w-full"
+          className="bg-red-600 text-white px-6 py-2 rounded w-full"
           disabled={loading}
         >
           {loading ? "Searching..." : "Search"}
         </button>
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         <div className="max-h-96 overflow-y-auto mt-4">
-          {loading && (
-            <div className="text-gray-400 text-center">Loading...</div>
-          )}
-
-          {!loading && results.length > 0
-            ? results.map((movie) => (
-                <div
-                  key={movie.id}
-                  className="flex items-center gap-4 p-2 hover:bg-zinc-800 cursor-pointer rounded"
-                  onClick={() =>
-                    onSelect({
-                      title: movie.title,
-                      poster: movie.poster_path,
-                      year: movie.release_date?.split("-")[0],
-                    })
-                  }
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-                    alt={movie.title}
-                    className="w-16 h-24 object-cover rounded"
-                  />
-                  <div>
-                    <h3 className="font-bold">{movie.title || "No Title"}</h3>
-                    <p className="text-sm text-gray-400">
-                      {movie.release_date?.split("-")[0] || "Unknown Year"}
-                    </p>
-                  </div>
+          {loading && <p className="text-gray-400 text-center">Loading...</p>}
+          {!loading &&
+            results.map((movie) => (
+              <div
+                key={movie.id}
+                className="p-2 hover:bg-zinc-800 cursor-pointer rounded flex"
+                onClick={() =>
+                  onSelect({
+                    id: movie.id,
+                    title: movie.title,
+                    poster: movie.poster_path,
+                  })
+                }
+              >
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                  alt={movie.title}
+                  className="w-12 h-18 object-cover rounded"
+                />
+                <div className="ml-4">
+                  <h3 className="text-white">{movie.title}</h3>
                 </div>
-              ))
-            : !loading && (
-                <div className="text-gray-400 text-center">
-                  {results.length === 0 && !error
-                    ? "No results found."
-                    : error || "An unexpected error occurred."}
-                </div>
-              )}
+              </div>
+            ))}
         </div>
       </div>
     </div>
