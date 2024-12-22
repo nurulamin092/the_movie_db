@@ -1,29 +1,34 @@
 "use client";
+import useDebounce from "@/app/hooks/useDebounce";
+import Image from "next/image";
 import { useState } from "react";
+import SearchBar from "./SearchBar";
 
 const SearchDialog = ({ onClose, onSelect }) => {
-  const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSearch = async () => {
-    if (!searchTerm.trim()) {
-      setError("Please enter a valid movie name.");
+  const fetchMovies = async (query) => {
+    if (!query.trim()) {
+      setResults([]);
+      setError("");
       return;
     }
+
     setLoading(true);
     setError("");
+
     try {
       const res = await fetch(
         `http://localhost:3000/api/movie/search?query=${encodeURIComponent(
-          searchTerm
+          query
         )}`
       );
       const data = await res.json();
       setResults(data?.results || []);
-    } catch (error) {
-      console.error("Error fetching movies:", error);
+    } catch (err) {
+      console.error("Error fetching movies:", err);
       setError("Failed to fetch movies. Please try again later.");
     } finally {
       setLoading(false);
@@ -39,23 +44,8 @@ const SearchDialog = ({ onClose, onSelect }) => {
             ✕
           </button>
         </div>
-        <input
-          type="text"
-          placeholder="Type movie name..."
-          value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-            setError("");
-          }}
-          className="w-full bg-zinc-800 text-white px-4 py-2 rounded mb-4"
-        />
-        <button
-          onClick={handleSearch}
-          className="bg-red-600 text-white px-6 py-2 rounded w-full"
-          disabled={loading}
-        >
-          {loading ? "Searching..." : "Search"}
-        </button>
+        <SearchBar onSearch={fetchMovies} />
+
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         <div className="max-h-96 overflow-y-auto mt-4">
           {loading && <p className="text-gray-400 text-center">Loading...</p>}
@@ -69,16 +59,22 @@ const SearchDialog = ({ onClose, onSelect }) => {
                     id: movie.id,
                     title: movie.title,
                     poster: movie.poster_path,
+                    year: movie.release_date,
                   })
                 }
               >
-                <img
+                <Image
                   src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
                   alt={movie.title}
                   className="w-12 h-18 object-cover rounded"
+                  width={30}
+                  height={30}
                 />
                 <div className="ml-4">
                   <h3 className="text-white">{movie.title}</h3>
+                  <p class="text-sm text-gray-400">
+                    {movie.release_date?.slice(0, 4)}
+                  </p>
                 </div>
               </div>
             ))}
