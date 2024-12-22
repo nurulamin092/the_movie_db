@@ -1,6 +1,6 @@
 "use client";
-import { useRef } from "react";
 import useDebounce from "@/app/hooks/useDebounce";
+import { useRef } from "react";
 const SearchBar = ({ onSearch }) => {
   const inputRef = useRef("");
   const debouncedSearch = useDebounce((query) => {

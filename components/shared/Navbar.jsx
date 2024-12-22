@@ -20,7 +20,6 @@ const Navbar = () => {
               >
                 Compare Movies
               </Link>
-
               <Link
                 href="/watch-list"
                 className="text-white hover:text-gray-300"
@@ -29,7 +28,9 @@ const Navbar = () => {
               </Link>
             </div>
           </div>
-          <Search />
+          <div className="relative">
+            <Search />
+          </div>
         </div>
       </nav>
     </>
