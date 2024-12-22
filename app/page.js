@@ -1,69 +1,46 @@
-import MovieCard from "@/components/movies/MovieCard";
-import MovieTitle from "@/components/movies/MovieTitle";
+import MovieCategorySection from "@/components/movies/MovieCategorySection";
 import Hero from "@/components/shared/Hero";
 
 export default async function Home() {
+  let nowPlaying = [];
+  let popular = [];
+  let topRated = [];
+  let error = null;
+
   try {
     const [nowPlayingRes, popularRes, topRatedRes] = await Promise.all([
-      fetch("http://localhost:3000/api/movies/now-playing", { cache: "no-store" }),
-      fetch("http://localhost:3000/api/movies/popular", { cache: "no-store" }),
-      fetch("http://localhost:3000/api/movies/top-rated", { cache: "no-store" }),
+      fetch("http://localhost:3000/api/movies/now-playing"),
+      fetch("http://localhost:3000/api/movies/popular"),
+      fetch("http://localhost:3000/api/movies/top-rated"),
     ]);
 
     if (!nowPlayingRes.ok || !popularRes.ok || !topRatedRes.ok) {
       throw new Error("Failed to fetch one or more movie categories.");
     }
 
-    const nowPlaying = await nowPlayingRes.json();
-    const popular = await popularRes.json();
-    const topRated = await topRatedRes.json();
+    nowPlaying = await nowPlayingRes.json();
+    popular = await popularRes.json();
+    topRated = await topRatedRes.json();
+  } catch (err) {
+    error = err.message;
+  }
 
-    return (
-      <>
-        <Hero />
+  return (
+    <>
+
+      {nowPlaying.results && nowPlaying.results.length > 0 ? (
+        <Hero movies={nowPlaying.results} />
+      ) : (
         <section className="mb-8">
           <h2 className="text-2xl font-bold mb-4">Now Playing</h2>
-          <div className="flex space-x-4 overflow-x-auto pb-4">
-            {nowPlaying.results.map((movie) => (
-              <div key={movie.id} className="flex-shrink-0 w-48 cursor-pointer hover:scale-105 transition-transform">
-                <MovieCard movie={movie} />
-                <MovieTitle movie={movie} />
-              </div>
-
-            ))}
-
-          </div>
+          <p className="text-red-500">No now playing movies available.</p>
         </section>
+      )}
 
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Popular Movies</h2>
-          <div className="flex space-x-4 overflow-x-auto pb-4">
-            {popular.results.map((movie) => (
-              <div key={movie.id} className="flex-shrink-0 w-48 cursor-pointer hover:scale-105 transition-transform">
-                <MovieCard movie={movie} />
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Top Rated Movies</h2>
-          <div className="flex space-x-4 overflow-x-auto pb-4">
-            {topRated.results.map((movie) => (
-              <div key={movie.id} className="flex-shrink-0 w-48 cursor-pointer hover:scale-105 transition-transform">
-                <MovieCard movie={movie} />
-              </div>
-            ))}
-          </div>
-        </section>
-      </>
-    );
-  } catch (error) {
-    return (
-      <section className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Error</h2>
-        <p className="text-red-500">Failed to load movies: {error.message}</p>
-      </section>
-    );
-  }
+      {/* Render movie categories */}
+      <MovieCategorySection title="Now Playing" movies={nowPlaying.results || []} />
+      <MovieCategorySection title="Popular Movies" movies={popular.results || []} />
+      <MovieCategorySection title="Top Rated Movies" movies={topRated.results || []} />
+    </>
+  );
 }
