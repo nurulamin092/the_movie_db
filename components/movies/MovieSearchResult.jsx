@@ -1,12 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
+
 const MovieSearchResult = ({ searchResults, query, error }) => {
   return (
     <>
       <div className="bg-black text-white min-h-screen">
         <main className="container mx-auto px-4 pt-24 pb-8">
           <h1 className="text-2xl font-bold mb-4">
-            Search Results for "{query}"
+            Search Results for {`"${query}"`}
           </h1>
           {error ? (
             <p className="text-red-500">Error: {error}</p>
@@ -36,7 +37,9 @@ const MovieSearchResult = ({ searchResults, query, error }) => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-400">No results found for "{query}".</p>
+            <p className="text-gray-400">
+              No results found for {`"${query}"`}.
+            </p>
           )}
         </main>
       </div>

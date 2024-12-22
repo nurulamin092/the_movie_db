@@ -71,7 +71,7 @@ const SearchDialog = ({ onClose, onSelect }) => {
                 />
                 <div className="ml-4">
                   <h3 className="text-white">{movie.title}</h3>
-                  <p class="text-sm text-gray-400">
+                  <p className="text-sm text-gray-400">
                     {movie.release_date?.slice(0, 4)}
                   </p>
                 </div>

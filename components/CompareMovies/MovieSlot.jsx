@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import SearchDialog from "./SearchDialog";
 
@@ -26,17 +27,16 @@ const MovieSlot = ({ onRemove }) => {
     setLoading(true);
     setError(null);
     try {
-      // Fetch detailed data for the selected movie
       const detailedMovie = await fetchMovieDetails(selectedMovie.id);
       setMovie({
         ...selectedMovie,
-        ...detailedMovie, // Merge detailed data into the movie object
+        ...detailedMovie,
       });
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
-      setIsDialogOpen(false); // Close the dialog
+      setIsDialogOpen(false);
     }
   };
 
@@ -62,10 +62,12 @@ const MovieSlot = ({ onRemove }) => {
           {movie && !loading && !error && (
             <div className="grid grid-cols-5 gap-8">
               <div className="col-span-2 h-full">
-                <img
+                <Image
                   src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
                   alt={movie.title}
                   className="w-full rounded-lg mb-4 object-contain max-h-full"
+                  width={300}
+                  height={300}
                 />
                 <h2 className="text-xl font-bold mb-2 text-center">
                   {movie.title}
