@@ -1,8 +1,10 @@
 "use client";
+import { useRouter } from "next/navigation";
 
 import { useState } from "react";
 
 export default function RegisterForm() {
+  const router = useRouter();
   const initialForm = {
     firstName: "",
     lastName: "",
@@ -32,6 +34,7 @@ export default function RegisterForm() {
       if (res.ok) {
         alert("Registration successful!");
         setFormData(initialForm);
+        router.push("/auth/login");
       } else {
         alert(data.error || "Registration failed");
       }
