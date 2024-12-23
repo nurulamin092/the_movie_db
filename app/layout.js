@@ -1,6 +1,7 @@
 import Navbar from "@/components/shared/Navbar";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import AuthProvider from "./providers/AuthProvider";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -15,10 +16,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.className} bg-black text-white`}
       >
-        <Navbar />
-        <div className="container mx-auto px-4 py-8">
-          {children}
-        </div>
+        <AuthProvider>
+          <Navbar />
+          <div className="container mx-auto px-4 py-8">
+            {children}
+          </div>
+        </AuthProvider>
+
 
       </body>
     </html>
