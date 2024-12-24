@@ -1,6 +1,6 @@
 "use server";
 
-import { createUser, findUserByCredentials } from "@/db/queries";
+import { createUser, findUserByCredentials, updateWatchList } from "@/db/queries";
 import { redirect } from "next/navigation";
 export async function registerUser(formData) {
     const user = Object.fromEntries(formData);
@@ -18,4 +18,13 @@ export async function performLogin(formData) {
     } catch (error) {
         throw error;
     }
+}
+
+export async function addWatchList(movieId, authId) {
+    try {
+        await updateWatchList(movieId, authId);
+    } catch (error) {
+        throw error;
+    }
+    revalidatePath('/');
 }

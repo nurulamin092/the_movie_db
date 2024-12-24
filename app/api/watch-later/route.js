@@ -1,32 +1,34 @@
-import { getSession } from "next-auth/react"; // For NextAuth.js authentication
-import { NextResponse } from "next/server";
+import { getSession } from "next-auth/react";
+import { watchListModel } from "@/models/watchListModel";
 
-// Check the user's session to ensure they are authenticated
 export async function POST(req) {
     try {
-        const { movieId } = await req.json();
-        if (!movieId) return NextResponse.json({ error: "Movie ID is required" }, { status: 400 });
-
         const session = await getSession({ req });
-        if (!session) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
+        if (!session) {
+            return new Response(JSON.stringify({ error: "Unauthorized" }), {
+                status: 401,
+            });
+        }
 
-    } catch (error) {
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
-    }
-}
-
-export async function DELETE(req) {
-    try {
         const { movieId } = await req.json();
-        if (!movieId) return NextResponse.json({ error: "Movie ID is required" }, { status: 400 });
+        const userId = session.user.id;
 
-        const session = await getSession({ req });
-        if (!session) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+        // Check if the movie is already in the watch list
+        const existingEntry = await watchListModel.findOne({ userId, movieId });
 
-        // Perform the logic to remove movie from the watchlist
-        // Continue with your logic for removing the movie from the watch list
+        if (existingEntry) {
+            // If the movie exists, remove it
+            await watchListModel.deleteOne({ _id: existingEntry._id });
+            return new Response(JSON.stringify({ added: false }), { status: 200 });
+        } else {
+            // If not, add it to the watch list
+            await watchListModel.create({ userId, movieId });
+            return new Response(JSON.stringify({ added: true }), { status: 200 });
+        }
     } catch (error) {
-        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        return new Response(JSON.stringify({ error: error.message }), {
+            status: 500,
+        });
     }
 }
