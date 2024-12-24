@@ -9,23 +9,29 @@ const SignInOut = () => {
 
   const logout = () => {
     setAuth(null);
-    router.push("/login");
+    router.push("/auth/login");
   };
 
+  console.log("Current auth state:", auth);
+
   return (
-    <div>
-      {auth ? (
-        <>
-          <span className="mx-2">Hello, {auth?.name}</span>
-          <span className="mx-1">|</span>
-          <a className="cursor-pointer" onClick={logout}>
-            Logout
-          </a>
-        </>
-      ) : (
-        <Link href="/login">Login</Link>
-      )}
-    </div>
+    <>
+      <div>
+        {auth ? (
+          <>
+            <span className="mx-2">
+              Hello, {auth?.firstName} {auth?.lastName}{" "}
+            </span>
+            <span className="mx-1"> | </span>
+            <a className="cursor-pointer" onClick={logout}>
+              Logout
+            </a>
+          </>
+        ) : (
+          <Link href="/auth/login">Login</Link>
+        )}
+      </div>
+    </>
   );
 };
 

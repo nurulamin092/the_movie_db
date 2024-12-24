@@ -2,51 +2,45 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/hooks/useAuth";
+import { performLogin } from "@/app/actions";
 const LoginForm = () => {
+  const [error, setError] = useState("");
+  const { setAuth } = useAuth();
   const router = useRouter();
-  const [formData, setFormData] = useState({ email: "", password: "" });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Submitting form data:", formData); // Debugging
+  async function onSubmit(event) {
+    event.preventDefault();
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        console.log("User data:", data.user);
+      const formData = new FormData(event.currentTarget);
+      const found = await performLogin(formData);
+
+      if (found) {
+        setAuth(found);
         router.push("/");
       } else {
-        alert(data.error || "Login failed");
+        setError("Please provide a valid login credential");
       }
-    } catch (error) {
-      console.error("Error during login:", error);
-      alert("Something went wrong. Please try again.");
+    } catch (err) {
+      setError(err.message);
     }
-  };
+  }
+
   return (
     <>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="my-2 text-red-500">{error}</div>
+      <form onSubmit={onSubmit} className="space-y-4">
         <input
           type="email"
+          name="email"
           placeholder="Email or phone number"
           className="w-full p-3 bg-moviedb-gray text-white rounded focus:outline-none focus:ring-2 focus:ring-moviedb-red"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          required
         />
         <input
           type="password"
+          name="password"
           placeholder="Password"
           className="w-full p-3 bg-moviedb-gray text-white rounded focus:outline-none focus:ring-2 focus:ring-moviedb-red"
-          value={formData.password}
-          onChange={(e) =>
-            setFormData({ ...formData, password: e.target.value })
-          }
-          required
         />
         <button
           type="submit"

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import SearchDialog from "./SearchDialog";
 
@@ -62,17 +63,20 @@ const MovieSlot = ({ onRemove }) => {
           {movie && !loading && !error && (
             <div className="grid grid-cols-5 gap-8">
               <div className="col-span-2 h-full">
-                <Image
-                  src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
-                  alt={movie.title}
-                  className="w-full rounded-lg mb-4 object-contain max-h-full"
-                  width={300}
-                  height={300}
-                />
-                <h2 className="text-xl font-bold mb-2 text-center">
-                  {movie.title}
-                </h2>
+                <Link href={`/movie/${movie.id}`}>
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
+                    alt={movie.title}
+                    className="w-full rounded-lg mb-4 object-contain max-h-full"
+                    width={300}
+                    height={300}
+                  />
+                  <h2 className="text-xl font-bold mb-2 text-center">
+                    {movie.title}
+                  </h2>
+                </Link>
               </div>
+
               <div className="w-full space-y-4 col-span-3">
                 <div className="bg-zinc-800 p-3 rounded">
                   <span className="text-gray-400">Rating:</span>
