@@ -13,16 +13,13 @@ export async function POST(req) {
 
         const { movieId } = await req.json();
         const userId = session.user.id;
-
-        // Check if the movie is already in the watch list
         const existingEntry = await watchListModel.findOne({ userId, movieId });
 
         if (existingEntry) {
-            // If the movie exists, remove it
+
             await watchListModel.deleteOne({ _id: existingEntry._id });
             return new Response(JSON.stringify({ added: false }), { status: 200 });
         } else {
-            // If not, add it to the watch list
             await watchListModel.create({ userId, movieId });
             return new Response(JSON.stringify({ added: true }), { status: 200 });
         }

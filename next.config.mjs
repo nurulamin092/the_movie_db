@@ -3,29 +3,9 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                protocol: 'https',
-                hostname: 'image.tmdb.org',
-
+                protocol: "https",
+                hostname: "**",
             },
-            {
-                protocol: 'http',
-                hostname: 'facebook.com',
-
-            },
-            {
-                protocol: 'http',
-                hostname: 'x.com',
-
-            },
-            {
-                protocol: 'http',
-                hostname: 'linkedin.com',
-
-            }
-
-
-
-
         ],
     },
 };
