@@ -1,26 +1,33 @@
 import mongoose from "mongoose";
 
-let isConnected = false; // Global connection state
+const MONGODB_URI = process.env.MONGO_URI;
 
-export async function connectMongo() {
-    if (isConnected) {
-        console.log("MongoDB already connected.");
-        return;
+const cached = {};
+
+async function connectMongo() {
+    if (!MONGODB_URI) {
+        throw new Error("Please add your Mongo URI to .env.local");
+    }
+
+    if (cached.connection) {
+        return cached.connection;
+    }
+
+    if (!cached.promise) {
+        const opts = {
+            bufferCommands: false,
+        };
+        cached.promise = mongoose.connect(MONGODB_URI, opts);
     }
 
     try {
-        const mongoUri = process.env.MONGO_URI;
-        if (!mongoUri) throw new Error("MongoDB URI is not defined in environment variables.");
-
-        await mongoose.connect(mongoUri, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-
-        isConnected = true;
-        console.log("MongoDB connected successfully.");
-    } catch (error) {
-        console.error("MongoDB connection failed:", error);
-        throw new Error("Unable to connect to MongoDB.");
+        cached.connection = await cached.promise;
+    } catch (e) {
+        cached.promise = undefined;
+        throw e;
     }
+
+    return cached.connection;
 }
+
+export default connectMongo;

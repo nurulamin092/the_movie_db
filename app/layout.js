@@ -12,7 +12,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  await connectMongo()
+
   return (
     <html lang="en">
       <body
