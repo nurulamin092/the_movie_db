@@ -2,7 +2,9 @@ import Image from "next/image";
 import Cast from "./Cast";
 import Genres from "./Genres";
 import ShareSection from "./ShareSection";
+
 import WatchList from "./WatchList";
+// Generate Metadata for SEO and Social Media Sharing
 
 const MovieDetails = ({ movie }) => {
   return (
@@ -61,7 +63,7 @@ const MovieDetails = ({ movie }) => {
               </div>
               <div className="mb-6">
                 <h3 className="text-gray-400 mb-2">Share on social media</h3>
-                <ShareSection />
+                <ShareSection movie={movie} />
               </div>
             </div>
           </div>

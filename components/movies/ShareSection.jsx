@@ -1,43 +1,43 @@
-import Image from "next/image";
+"use client";
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
+import { FaFacebook, FaTwitter, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 
-const ShareSection = () => {
+const ShareSection = ({ movie }) => {
+  const shareUrl =
+    typeof window !== "undefined"
+      ? window.location.href
+      : `http://localhost:3000/api/movie/${movie.id}`;
+
+  const title = `${movie.title} | Movie BD`;
+  const description = movie.overview;
+  // const [shareButtonsVisible, setShareButtonsVisible] = useState(false);
+  // const handleClickShare = () => {
+  //   setShareButtonsVisible(!shareButtonsVisible);
+  // };
+
   return (
-    <>
-      <div className="flex flex-wrap gap-4">
-        <button className="text-center cursor-pointer">
-          <Image
-            src="http://facebook.com/favicon.ico"
-            alt="Facebook"
-            className="w-8 h-8 rounded-full object-cover mb-2 mx-auto"
-            height={30}
-            width={30}
-          />
-          <p className="text-sm">Facebook</p>
-        </button>
+    <div className="flex gap-4">
+      <FacebookShareButton url={shareUrl} quote={description}>
+        <FaFacebook size={32} />
+      </FacebookShareButton>
 
-        <button className="text-center cursor-pointer">
-          <Image
-            src="http://x.com/favicon.ico"
-            alt="Facebook"
-            className="w-8 h-8 rounded-full object-cover mb-2 mx-auto"
-            height={30}
-            width={30}
-          />
-          <p className="text-sm">X</p>
-        </button>
+      <TwitterShareButton url={shareUrl} title={title}>
+        <FaTwitter size={32} />
+      </TwitterShareButton>
 
-        <button className="text-center cursor-pointer">
-          <Image
-            src="http://linkedin.com/favicon.ico"
-            alt="Facebook"
-            className="w-8 h-8 rounded-full object-cover mb-2 mx-auto"
-            height={30}
-            width={30}
-          />
-          <p className="text-sm">Linkedin</p>
-        </button>
-      </div>
-    </>
+      <WhatsappShareButton url={shareUrl} title={title}>
+        <FaWhatsapp size={32} />
+      </WhatsappShareButton>
+
+      <EmailShareButton url={shareUrl} subject={title} body={description}>
+        <FaEnvelope size={32} />
+      </EmailShareButton>
+    </div>
   );
 };
 
