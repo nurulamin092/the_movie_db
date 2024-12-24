@@ -3,7 +3,7 @@ import MovieDetails from "@/components/movies/MovieDetails";
 
 export async function generateMetadata({ params }) {
 
-    const res = await fetch(`http://localhost:3000/api/movie/${params.movieId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/movie/${params.movieId}`, {
         cache: "no-store",
     });
     const movie = await res.json();
@@ -23,14 +23,14 @@ export async function generateMetadata({ params }) {
                     alt: movie.title,
                 },
             ],
-            url: `http://localhost:3000/api/movie/${params.movieId}`,
+            url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/movie/${params.movieId}`,
         },
     };
 }
 
 // Movie Details Page Component
 export default async function MovieDetailsPage({ params: { movieId } }) {
-    const res = await fetch(`http://localhost:3000/api/movie/${movieId}`, { cache: "no-store" });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/movie/${movieId}`, { cache: "no-store" });
     const movie = await res.json();
 
     return (

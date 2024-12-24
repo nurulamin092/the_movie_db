@@ -7,9 +7,9 @@ export function AddIcon() {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
+      strokeWidth="2"
       strokeLinecap="round"
-      stroke-linejoin="round"
+      strokeLinejoin="round"
       className="icon icon-tabler icons-tabler-outline icon-tabler-file-plus"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -29,9 +29,9 @@ export function AddedIcon() {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
+      strokeWidth="2"
       strokeLinecap="round"
-      stroke-linejoin="round"
+      strokeLinejoin="round"
       className="icon icon-tabler icons-tabler-outline icon-tabler-checks"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
