@@ -20,9 +20,9 @@ const SearchDialog = ({ onClose, onSelect }) => {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/api/movie/search?query=${encodeURIComponent(
-          query
-        )}`
+        `${
+          process.env.NEXT_PUBLIC_BASE_URL
+        }/api/movie/search?query=${encodeURIComponent(query)}`
       );
       const data = await res.json();
       setResults(data?.results || []);

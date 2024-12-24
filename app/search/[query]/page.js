@@ -7,7 +7,7 @@ const SearchResultsPage = async ({ params: { query } }) => {
     let error = null;
 
     try {
-        const res = await fetch(`http://localhost:3000/api/movie/search?query=${query}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/movie/search?query=${query}`);
         if (!res.ok) throw new Error("Failed to fetch search results");
         searchResults = await res.json();
     } catch (err) {

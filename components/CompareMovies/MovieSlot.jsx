@@ -13,7 +13,9 @@ const MovieSlot = ({ onRemove }) => {
 
   const fetchMovieDetails = async (movieId) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/movie/${movieId}`);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/movie/${movieId}`
+      );
       if (!res.ok) {
         throw new Error("Failed to fetch movie details.");
       }

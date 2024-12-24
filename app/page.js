@@ -9,9 +9,9 @@ export default async function Home() {
 
   try {
     const [nowPlayingRes, popularRes, topRatedRes] = await Promise.all([
-      fetch("http://localhost:3000/api/movies/now-playing"),
-      fetch("http://localhost:3000/api/movies/popular"),
-      fetch("http://localhost:3000/api/movies/top-rated"),
+      fetch("${process.env.NEXT_PUBLIC_BASE_URL}/api/movies/now-playing"),
+      fetch("${process.env.NEXT_PUBLIC_BASE_URL}/api/movies/popular"),
+      fetch("${process.env.NEXT_PUBLIC_BASE_URL}/api/movies/top-rated"),
     ]);
 
     if (!nowPlayingRes.ok || !popularRes.ok || !topRatedRes.ok) {

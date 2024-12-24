@@ -11,7 +11,7 @@ const ShareSection = ({ movie }) => {
   const shareUrl =
     typeof window !== "undefined"
       ? window.location.href
-      : `http://localhost:3000/api/movie/${movie.id}`;
+      : `${process.env.NEXT_PUBLIC_BASE_URL}/api/movie/${movie.id}`;
 
   const title = `${movie.title} | Movie BD`;
   const description = movie.overview;

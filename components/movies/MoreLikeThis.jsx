@@ -11,7 +11,7 @@ const MoreLikeThis = ({ movieId }) => {
     const fetchRelatedMovies = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/movie/${movieId}/similar`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/movie/${movieId}/similar`,
           {
             cache: "no-store",
           }
